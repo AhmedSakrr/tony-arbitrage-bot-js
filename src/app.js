@@ -4,9 +4,8 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 require('dotenv').config();
+const middlewares = require('./api/middleware/errorMiddleware');
 
-const middlewares = require('./middlewares');
-const api = require('./api');
 
 const swaggerUi = require('swagger-ui-express');
 const fs = require('fs');
@@ -31,9 +30,19 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/api/v1', api);
+
+
+// import all routes here
+const user = require("./api/route/user");
+
+// router middleware
+app.use("/api/v1", user);
+
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
+
+
+
 
 module.exports = app;

@@ -1,8 +1,10 @@
-const app = require('./app');
+const app = require("./app");
+const connectWithDb = require("./api/config/db");
+const logger = require("./api/logger");
+require("dotenv").config();
 
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  /* eslint-disable no-console */
-  console.log(`Listening: http://localhost:${port}`);
-  /* eslint-enable no-console */
+connectWithDb();
+
+app.listen(process.env.PORT, () => {
+  logger.info(`Server is running at port :${process.env.PORT}`);
 });
